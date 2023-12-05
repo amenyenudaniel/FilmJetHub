@@ -25,7 +25,7 @@ const Hero = () => {
           diverse collection that caters to every entertainment preference"
         </p>
         <Link href={"/create-account"}>
-          <button className="outline-none border-none py-2 sm:px-4  px-3 text-white bg-red mt-[2rem] sm:text-[22px] text-[18px] font-bold rounded-[5px] hover:bg-white hover:text-black  transition">
+          <button className="outline-none border-none py-2 sm:px-4  px-3 text-white  mont bg-red mt-[2rem] sm:text-[22px] text-[18px] font-bold rounded-[5px] hover:bg-white hover:text-black  transition">
             Get Started
           </button>
         </Link>

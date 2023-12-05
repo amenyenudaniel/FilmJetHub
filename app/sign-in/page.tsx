@@ -52,7 +52,7 @@ const SignIn = () => {
         </button>
 
         <p className="text-white mont mt-[1rem] sm:text-[20px] text-[17px]">
-          Don't have account{" "}
+          Don't have account?{" "}
           <Link
             className="text-red hover:underline poppins transition"
             href={"/create-account"}

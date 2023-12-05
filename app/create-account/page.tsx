@@ -51,7 +51,7 @@ const CreateAccount = () => {
         </button>
 
         <p className="text-white mont mt-[1rem] sm:text-[20px] text-[17px]">
-          Already have account{" "}
+          Already have account?{" "}
           <Link
             className="text-red hover:underline poppins transition"
             href={"/sign-in"}

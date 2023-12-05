@@ -56,14 +56,13 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       await account.createEmailSession(email, password);
       const fetchedUser = (await account.get<User<Preferences>>()) || undefined;
       setUser(fetchedUser);
-
+      router.push("/home");
       setEmail("");
       setPassword("");
     } catch (error) {
-      console.error(error);
+      alert(error);
     } finally {
       setLoadingUser(false);
-      router.push("/home");
     }
   };
 
@@ -72,7 +71,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       await account.create(ID.unique(), email, password);
       await handleLogIn();
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 

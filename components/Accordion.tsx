@@ -1,5 +1,6 @@
 "use client";
 import { AccordionItemProps } from "@/types";
+import Link from "next/link";
 import { useState } from "react";
 import { useSpring, animated } from "react-spring";
 
@@ -77,6 +78,16 @@ const Accordion = () => {
           content="Yes, FilmJetHub typically provides subtitles for a variety of languages, enhancing accessibility for a global audience."
         />
       </div>
+      <p className="text-white mt-[3rem] sm:text-[20px] text-[17px] mont text-center">
+        What are you waiting for?{" "}
+        <Link
+          className="text-red  font-bold hover:underline"
+          href={"/create-account"}
+        >
+          Sign Up{" "}
+        </Link>
+        now and get all movies and tv shows anytime ~ anywhere!
+      </p>
     </section>
   );
 };

@@ -9,17 +9,31 @@ import { trendingMoviesProps } from "@/types";
 import Image from "next/image";
 import { TrendingMovies } from "@/constants/api";
 import Link from "next/link";
+import Loading from "./Loading";
 
 const Trending = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    TrendingMovies().then((data) => {
-      console.log(data?.results);
-      setTrendingMovies(data?.results);
-    });
+    setLoading(true);
+    try {
+      TrendingMovies()
+        .then((data) => {
+          console.log(data?.results);
+          setTrendingMovies(data?.results);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <section className="padding bg-black">
       <h1 className="text-white poppins font-bold sm:text-[30px] text-[20px] mb-[3rem]">

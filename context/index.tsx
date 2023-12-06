@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { auth, googleProvider } from "../constants/firebase";
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -19,10 +21,37 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loadingUser, setLoadingUser] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<any>(undefined);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setLoading(true);
+    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+      if (authUser) {
+        setUser(authUser);
+        router.push("/home");
+        setLoading(false);
+      } else {
+        setUser(undefined);
+        setLoading(false);
+        router.push("/");
+      }
+    });
 
-  const handleLogIn = async () => {};
+    return () => unsubscribe();
+  }, [auth, router]);
+
+  const handleLogIn = async () => {
+    setLoadingUser(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      router.push("/home");
+    } catch (error) {
+      alert(error);
+    } finally {
+      setLoadingUser(false);
+    }
+  };
 
   const handleSignUp = async () => {
     setLoadingUser(true);
@@ -76,6 +105,9 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
     return <Loading />;
   }
 
+  if (loading) {
+    return <Loading />;
+  }
   const contextValue: AuthContextProps = {
     email,
     password,

@@ -39,16 +39,16 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   const [loadingUser, setLoadingUser] = useState<boolean>(false);
   console.log({ user });
 
-  useEffect(() => {
-    setLoadingUser(true);
-    const getUser: any = async () => {
-      setUser(await account.get());
-      setLoadingUser(false);
-      // router.push("/home");
-    };
+  // useEffect(() => {
+  //   setLoadingUser(true);
+  //   const getUser: any = async () => {
+  //     setUser(await account.get());
+  //     setLoadingUser(false);
+  //     // router.push("/home");
+  //   };
 
-    getUser();
-  }, []);
+  //   getUser();
+  // }, []);
 
   const handleLogIn = async () => {
     try {
@@ -75,6 +75,17 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
     }
   };
 
+  // const handleSignOut = async () => {
+  //   try {
+  //     setLoadingUser(true);
+  //     await account.deleteSession("current");
+  //     setUser(null);
+  //     setLoadingUser(false);
+  //     router.push("/");
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
   if (loadingUser) {
     return <Loading />;
   }

@@ -35,7 +35,7 @@ const Trending = () => {
     return <Loading />;
   }
   return (
-    <section className="padding bg-black">
+    <section className="padding">
       <h1 className="text-white poppins font-bold sm:text-[30px] text-[20px] mb-[3rem]">
         Trending Now
       </h1>
@@ -50,12 +50,12 @@ const Trending = () => {
           },
 
           480: {
-            slidesPerView: 2,
+            slidesPerView: 3,
             spaceBetween: 10,
           },
 
           640: {
-            slidesPerView: 2,
+            slidesPerView: 3,
             spaceBetween: 20,
           },
 
@@ -82,7 +82,7 @@ const Trending = () => {
         ))}
       </Swiper>
 
-      <p className="mont sm:text-[22px] text-[19px] text-white mt-[2rem] text-center font-medium">
+      <p className="mont sm:text-[22px] text-[19px] text-white mt-[2rem]  font-medium">
         Not a member yet?{" "}
         <Link
           className="text-red hover:underline poppins"

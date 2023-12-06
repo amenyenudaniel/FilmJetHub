@@ -18,4 +18,5 @@ export interface AuthContextProps {
   setPassword: Dispatch<SetStateAction<string>>;
   handleLogIn: () => Promise<void>;
   handleSignUp: () => Promise<void>;
+  handleSignOut?: () => Promise<void>;
 }

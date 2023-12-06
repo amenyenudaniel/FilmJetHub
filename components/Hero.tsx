@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import Trending from "./Trending";
 
 const Hero = () => {
   return (
@@ -17,12 +18,11 @@ const Hero = () => {
         </Link>
       </nav>
 
-      <section className="margin flex justify-center items-center flex-col">
-        <p className="lg:w-[60%] sm:w-[80%] w-[100%] px-[1rem] sm:px-[0rem] text-white sm:text-[28px] text-[20px] mont text-center font-bold">
-          "Explore a vast library of limitless entertainment on our movies
-          website. Enjoy unlimited streaming and downloading of movies, TV
-          shows, and cartoons. Dive into a world of cinematic experiences with a
-          diverse collection that caters to every entertainment preference"
+      <section className=" mt-[3rem] flex justify-center items-center flex-col">
+        <p className="lg:w-[60%] sm:w-[80%] w-[100%] px-[1rem] sm:px-[0rem] text-white md:text-[50px] sm:text-[40px] text-[30px] poppins text-center font-bold">
+          Watch & Download <span className="text-red">Free</span>{" "}
+          <br className="hidden sm:flex" />
+          Unlimited Movies and Tv Shows
         </p>
         <Link href={"/create-account"}>
           <button className="outline-none border-none py-2 sm:px-4  px-3 text-white  mont bg-red mt-[2rem] sm:text-[22px] text-[18px] font-bold rounded-[5px] hover:bg-white hover:text-black  transition">
@@ -30,6 +30,8 @@ const Hero = () => {
           </button>
         </Link>
       </section>
+
+      <Trending />
     </header>
   );
 };

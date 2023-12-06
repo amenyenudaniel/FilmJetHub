@@ -1,64 +1,34 @@
 "use client";
 import { createContext, ReactNode, useState, useEffect } from "react";
-import { Client, Account, ID } from "appwrite";
 import { AuthContextProps } from "@/types";
 import Loading from "@/components/Loading";
 import { useRouter } from "next/navigation";
-
-interface AuthContextProviderProps {
-  children: ReactNode;
-}
-
-interface Preferences {
-  email: string;
-  password: string;
-}
-
-interface User<T = Preferences> {
-  id: string;
-  username: string;
-  preferences: T;
-}
+import { auth, googleProvider } from "../constants/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 
 export const AuthContext = createContext<AuthContextProps | null>(null);
 
-const client = new Client();
-client
-  .setEndpoint(`${process.env.NEXT_PUBLIC_API_AUTH_ENDPOINT}`)
-  .setProject(`${process.env.NEXT_PUBLIC_API_AUTH_KEY}`);
-
-const account = new Account(client);
-
-export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
+export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState<any>(undefined);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [loadingUser, setLoadingUser] = useState<boolean>(false);
-  console.log({ user });
 
-  // useEffect(() => {
-  //   setLoadingUser(true);
-  //   const getUser: any = async () => {
-  //     setUser(await account.get());
-  //     setLoadingUser(false);
-  //     // router.push("/home");
-  //   };
+  useEffect(() => {}, []);
 
-  //   getUser();
-  // }, []);
+  const handleLogIn = async () => {};
 
-  const handleLogIn = async () => {
+  const handleSignUp = async () => {
+    setLoadingUser(true);
     try {
-      setLoadingUser(true);
-      await account.createEmailSession(email, password);
-      const fetchedUser = (await account.get<User<Preferences>>()) || undefined;
-      setUser(fetchedUser);
+      await createUserWithEmailAndPassword(auth, email, password);
       router.push("/home");
-      setEmail("");
-      setPassword("");
     } catch (error) {
       alert(error);
     } finally {
@@ -66,26 +36,42 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
     }
   };
 
-  const handleSignUp = async () => {
+  const googleSignUp = async () => {
+    setLoadingUser(true);
     try {
-      await account.create(ID.unique(), email, password);
-      await handleLogIn();
+      await signInWithPopup(auth, googleProvider);
+      router.push("/home");
     } catch (error) {
       alert(error);
+    } finally {
+      setLoadingUser(false);
     }
   };
 
-  // const handleSignOut = async () => {
-  //   try {
-  //     setLoadingUser(true);
-  //     await account.deleteSession("current");
-  //     setUser(null);
-  //     setLoadingUser(false);
-  //     router.push("/");
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+  if (auth.currentUser) {
+    console.log(auth.currentUser.email);
+  } else {
+    console.log("No user is currently signed in");
+  }
+
+  const handleSignOut = async () => {
+    setLoadingUser(true);
+    try {
+      await signOut(auth);
+      router.push("/");
+    } catch (error) {
+      alert(error);
+    } finally {
+      setLoadingUser(false);
+    }
+  };
+
+  if (auth.currentUser) {
+    console.log(auth.currentUser.email);
+  } else {
+    console.log("No user is currently signed in");
+  }
+
   if (loadingUser) {
     return <Loading />;
   }
@@ -93,12 +79,13 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   const contextValue: AuthContextProps = {
     email,
     password,
-    user,
+    auth,
     setEmail,
+    handleSignOut,
     setPassword,
     handleLogIn,
     handleSignUp,
-    setUser,
+    googleSignUp,
   };
 
   return (

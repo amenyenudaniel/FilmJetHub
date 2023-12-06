@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const Navbar = () => {
   const [userOpen, setUserOpen] = useState<boolean>(false);
-  const { user } = useContext(AuthContext) as AuthContextProps;
+  const { auth, handleSignOut } = useContext(AuthContext) as AuthContextProps;
   return (
     <section>
       <nav className="paddingNav bg-black py-2 flex items-center justify-between">
@@ -32,35 +32,34 @@ const Navbar = () => {
           </Link>
           <SearchBar />
         </div>
-        <Image
-          src={"/profile.svg"}
-          width={35}
-          height={35}
-          alt="profile"
-          className="cursor-pointer"
-          onClick={() => setUserOpen(!userOpen)}
-        />
+        {auth?.currentUser?.photoURL ? (
+          <Image
+            src={auth?.currentUser?.photoURL}
+            width={35}
+            height={35}
+            alt="profile"
+            className="cursor-pointer rounded-full"
+            onClick={() => setUserOpen(!userOpen)}
+          />
+        ) : (
+          <Image
+            src={"/profile.svg"}
+            width={35}
+            height={35}
+            alt="profile"
+            className="cursor-pointer"
+            onClick={() => setUserOpen(!userOpen)}
+          />
+        )}
       </nav>
 
       {userOpen && (
-        <div className="w-[400px] flex items-center flex-col justify-center px-1 py-4 bg-gray rounded-[10px] absolute right-[20px]">
-          <div className="flex justify-between gap-[10px] items-center">
-            <p className="text-white text-[18px] mont">{user.email}</p>
-            <p
-              className="text-[30px] text-red cursor-pointer"
-              onClick={() => setUserOpen(false)}
-            >
-              x
-            </p>
-          </div>
-
-          {/* <button
-            onClick={handleSignOut}
-            className="outline-none border-none py-2 sm:px-4  px-3 text-white  mont bg-red mt-[2rem] sm:text-[22px] text-[18px] font-bold rounded-[5px] hover:bg-white hover:text-black transition"
-          >
-            Sign Out
-          </button> */}
-        </div>
+        <button
+          onClick={handleSignOut}
+          className="outline-none border-none py-2 sm:px-4  px-3 text-white  mont bg-red mt-[2rem] sm:text-[22px] text-[18px] font-bold rounded-[5px] hover:bg-white hover:text-black transition absolute right-[20px] top-[30px]"
+        >
+          Sign Out
+        </button>
       )}
     </section>
   );

@@ -91,3 +91,23 @@ autoplaySpeed= 1000
     padding-bottom: 4rem;
   }
 }
+
+.slide__bar::-webkit-scrollbar {
+  height: 10px;
+}
+.slide__bar::-webkit-scrollbar-track {
+  background-color: #414141;
+  border-radius: 2rem;
+}
+.slide__bar::-webkit-scrollbar-thumb {
+  background-color: #e50914;
+  border-radius: 2rem;
+}
+
+.gray-cast {
+  color: rgb(176, 172, 172);
+}
+
+.reviews {
+  background-color: rgba(40, 40, 40, 0.7);
+}

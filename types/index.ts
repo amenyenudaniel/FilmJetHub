@@ -22,10 +22,33 @@ export interface AuthContextProps {
 }
 
 export interface MovieProps {
-  backdrop_path: string;
   poster_path: string;
   title: string;
   vote_average: number;
   id: number;
   movie: any;
+}
+
+export interface MovieDetailsProps {
+  poster_path: string;
+  title: string;
+  homepage: string;
+  overview: string;
+  genres: any;
+  vote_average: number;
+  vote_count: number;
+  status: string;
+  imdb_id: number;
+  release_date: string;
+  runtime: number;
+  spoken_languages: any;
+  production_companies: any;
+  production_countries: any;
+  tagline: string;
+}
+
+export interface MovieTrailerProps {
+  key: string;
+  name: string;
+  id: number;
 }

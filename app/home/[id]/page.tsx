@@ -1,12 +1,16 @@
+import Footer from "@/components/Footer";
+import MovieDetails from "@/components/MovieDetails";
 import Navbar from "@/components/Navbar";
-import React from "react";
+import { NextPage } from "next";
 
-const MovieDetails = () => {
+const MovieDetailsPage: NextPage = () => {
   return (
     <section>
       <Navbar />
+      <MovieDetails />
+      <Footer />
     </section>
   );
 };
 
-export default MovieDetails;
+export default MovieDetailsPage;

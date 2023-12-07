@@ -20,3 +20,12 @@ export interface AuthContextProps {
   handleSignOut?: () => Promise<void>;
   googleSignUp?: () => Promise<void>;
 }
+
+export interface MovieProps {
+  backdrop_path: string;
+  poster_path: string;
+  title: string;
+  vote_average: number;
+  id: number;
+  movie: any;
+}

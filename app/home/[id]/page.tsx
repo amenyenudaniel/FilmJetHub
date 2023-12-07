@@ -1,12 +1,12 @@
 import Navbar from "@/components/Navbar";
 import React from "react";
 
-const TvShows = () => {
+const MovieDetails = () => {
   return (
-    <div>
+    <section>
       <Navbar />
-    </div>
+    </section>
   );
 };
 
-export default TvShows;
+export default MovieDetails;

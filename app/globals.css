@@ -111,3 +111,8 @@ autoplaySpeed= 1000
 .reviews {
   background-color: rgba(40, 40, 40, 0.7);
 }
+
+.container__:hover .image__container {
+  opacity: 0.6;
+  transition: ease 0.6s;
+}

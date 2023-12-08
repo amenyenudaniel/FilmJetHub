@@ -104,7 +104,7 @@ const Movies = () => {
         {movies?.map((movie: MovieProps) => (
           <SwiperSlide
             key={movie?.id}
-            className="w-[100%] h-full hover:scale-[1.1] transition hover:opacity-[0.7]"
+            className="w-[100%] h-full hover:scale-[1.1] transition container__"
           >
             <Link href={`/home/[id]`} as={`/home/${movie?.id}`}>
               <Image
@@ -112,6 +112,7 @@ const Movies = () => {
                 alt="movie-poster"
                 width={200}
                 height={400}
+                className="image__container"
               />
               {movie?.title.length > 13 ? (
                 <p className="text-white  md:text-[17px] text-[15px] mt-[0.5rem]">
@@ -139,7 +140,7 @@ const Movies = () => {
         {allMovies?.map((movie: MovieProps) => (
           <div
             key={movie?.id}
-            className="h-full hover:scale-[1.1] transition hover:opacity-[0.7]"
+            className="h-full hover:scale-[1.1] transition container__"
           >
             <Link href={`/home/[id]`} as={`/home/${movie?.id}`}>
               <Image
@@ -147,6 +148,7 @@ const Movies = () => {
                 alt="movie-poster"
                 width={200}
                 height={400}
+                className="image__container transition"
               />
               {movie?.title.length > 13 ? (
                 <p className="text-white  md:text-[17px] text-[15px] mt-[0.5rem]">

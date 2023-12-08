@@ -305,11 +305,11 @@ const MovieDetails = () => {
           </div>
         ))}
       </div>
-
-      <p className="text-white text-[20px] sm:text-[25px] poppins mb-[1rem] mt-[5rem]">
-        Similar Movies
-      </p>
-
+      {similarMovies.length !== 0 && (
+        <p className="text-white text-[20px] sm:text-[25px] poppins mb-[1rem] mt-[5rem]">
+          Similar Movies
+        </p>
+      )}
       <Swiper
         spaceBetween={20}
         slidesPerView={5}
@@ -346,7 +346,7 @@ const MovieDetails = () => {
             {movie?.poster_path && (
               <SwiperSlide
                 key={movie?.id}
-                className="w-[100%] h-full hover:scale-[1.1] transition hover:opacity-[0.7]"
+                className="w-[100%] h-full hover:scale-[1.1] transition container__"
               >
                 <Link href={`/home/[id]`} as={`/home/${movie?.id}`}>
                   <Image
@@ -354,6 +354,7 @@ const MovieDetails = () => {
                     alt="movie-poster"
                     width={200}
                     height={400}
+                    className="image__container transition"
                   />
                   {movie?.title.length > 13 ? (
                     <p className="text-white  md:text-[17px] text-[15px] mt-[0.5rem]">
@@ -415,7 +416,7 @@ const MovieDetails = () => {
             {movie?.poster_path && (
               <SwiperSlide
                 key={movie?.id}
-                className="w-[100%] h-full hover:scale-[1.1] transition hover:opacity-[0.7]"
+                className="w-[100%] h-full hover:scale-[1.1] transition container__"
               >
                 <Link href={`/home/[id]`} as={`/home/${movie?.id}`}>
                   <Image
@@ -423,6 +424,7 @@ const MovieDetails = () => {
                     alt="movie-poster"
                     width={200}
                     height={400}
+                    className="image__container transition"
                   />
                   {movie?.title.length > 13 ? (
                     <p className="text-white  md:text-[17px] text-[15px] mt-[0.5rem]">

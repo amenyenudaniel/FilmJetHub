@@ -240,7 +240,7 @@ const MovieDetails = () => {
           </h1>
 
           <div className="flex gap-[3rem] items-center overflow-auto mt-[1rem] slide__bar pb-[2rem]">
-            {trailer?.slice(0, 5)?.map((movieTrailer: MovieTrailerProps) => (
+            {trailer?.map((movieTrailer: MovieTrailerProps) => (
               <div key={movieTrailer?.id}>
                 <iframe
                   className="sm:w-[400px] w-[300px] sm:h-[300px] h-[250px]"

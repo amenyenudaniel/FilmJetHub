@@ -12,55 +12,68 @@ import { MovieProps } from "@/types";
 import { allMoviesAPI, nowPlayingMovies } from "@/constants/api";
 import Loading from "./Loading";
 
-// Main functional component
 const Movies = () => {
   const [movies, setMovies] = useState<MovieProps[]>([]);
   const [allMovies, setAllMovies] = useState<any>([]);
   const [pages, setPages] = useState<number>(1);
   const [loading, setLoading] = useState(false);
 
-  // Function to fetch data for "Now Playing" and "Popular Movies"
-  const fetchData = async () => {
+  const fetchData = async (pageNumber: number) => {
     setLoading(true);
     try {
-      const dataForPage1 = await allMoviesAPI(pages);
-      setAllMovies((prevMovies: any[]) => [
-        ...(Array.isArray(prevMovies) ? prevMovies : []),
-        ...(dataForPage1?.results || []),
-      ]);
+      const data = await allMoviesAPI(pageNumber);
+      return data?.results || [];
     } catch (error) {
       console.error(error);
+      return [];
     } finally {
       setLoading(false);
     }
   };
 
   // Function to handle "Load More" button click
-  const handleClick = () => {
-    setPages((prevPages: number) => prevPages + 1);
+  const handleClick = async () => {
+    const nextPage = pages + 4;
+
+    const dataForPage = await fetchData(nextPage);
+
+    setAllMovies((prevMovies: any[]) => [
+      ...(Array.isArray(prevMovies) ? prevMovies : []),
+      ...dataForPage.map((movie: MovieProps) => ({ ...movie, page: nextPage })),
+    ]);
+    setPages(nextPage);
   };
 
-  // Effect to fetch initial data for "Now Playing" movies
   useEffect(() => {
-    fetchData();
-  }, [pages]); // Fetch data when pages change
+    const fetchNowPlayingData = async () => {
+      const data = await nowPlayingMovies();
+      setMovies(data?.results || []);
+    };
 
-  // Effect to fetch initial data for "Now Playing" movies
+    fetchNowPlayingData();
+  }, []);
+
   useEffect(() => {
-    setLoading(true);
-    try {
-      nowPlayingMovies().then((data) => {
-        console.log(data?.results);
-        setMovies(data?.results);
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, []); // Fetch initial data for "Now Playing"
+    const fetchPopularMovies = async () => {
+      const dataForPage1 = await fetchData(pages);
+      const dataForPage2 = await fetchData(pages + 1);
+      const dataForPage3 = await fetchData(pages + 2);
+      setAllMovies([
+        ...dataForPage1.map((movie: MovieProps) => ({ ...movie, page: pages })),
+        ...dataForPage2.map((movie: MovieProps) => ({
+          ...movie,
+          page: pages + 1,
+        })),
+        ...dataForPage3.map((movie: MovieProps) => ({
+          ...movie,
+          page: pages + 2,
+        })),
+      ]);
+    };
 
-  // Loading state check
+    fetchPopularMovies();
+  }, []);
+
   if (loading) {
     return <Loading />;
   }

@@ -27,6 +27,7 @@ export interface MovieProps {
   vote_average: number;
   id: number;
   movie: any;
+  page?: number;
 }
 
 export interface MovieDetailsProps {

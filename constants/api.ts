@@ -223,3 +223,19 @@ export const allSeasonAPI = async (id: any, season_number: any) => {
     console.error(error);
   }
 };
+
+export const EpisodeDetailsAPI = async (
+  id: any,
+  season_number: any,
+  episode_number: any
+) => {
+  try {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/tv/${id}/season/${season_number}/episode/${episode_number}`,
+      options
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};

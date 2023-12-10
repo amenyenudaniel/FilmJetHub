@@ -13,7 +13,6 @@ const AccordionSeason = ({ episodes, s_air_date, season_number }: any) => {
   });
 
   const { id } = useParams();
-  console.log("pagenjsns", id);
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
   };
@@ -60,8 +59,8 @@ const AccordionSeason = ({ episodes, s_air_date, season_number }: any) => {
         {episodes?.map((episode: any) => (
           <Link
             key={episode?.still_path}
-            href="/tvshows/[id]/[anotherid]"
-            as={`/tvshows/${id}/season${season_number}episode${episode?.episode_number}`}
+            href="/tvshows/[id]/[season_number]/[episode_number]"
+            as={`/tvshows/${id}/${season_number}/${episode?.episode_number}`}
             className="flex items-center gap-[2rem] hover:bg-gray transition border border-gray p-3"
           >
             <Image

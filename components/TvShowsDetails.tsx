@@ -4,12 +4,11 @@ import { useParams } from "next/navigation";
 import {
   TvShowsCastAPI,
   TvShowsDetailsAPI,
-  TvShowsReviewsAPI,
   TvShowsSimilarAPI,
   TvShowsTrailerAPI,
   RecommendedTvShowsAPI,
+  allSeasonAPI,
 } from "@/constants/api";
-import { useSpring, animated } from "react-spring";
 import Image from "next/image";
 import { MovieDetailsProps, MovieProps, MovieTrailerProps } from "@/types";
 import Loading from "./Loading";
@@ -18,76 +17,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Link from "next/link";
-
-const Accordion = ({
-  e_air_date,
-  episode_number,
-  s_air_date,
-  id,
-  season_number,
-  name,
-  episode_image,
-}: any) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { height, opacity } = useSpring({
-    from: { height: 0, opacity: 0 },
-    to: { height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 },
-  });
-
-  const toggleAccordion = () => {
-    setIsOpen(!isOpen);
-  };
-
-  return (
-    <div className="border-b border-black gray w-[100%]">
-      <div
-        className="flex items-center gap-[2rem] cursor-pointer p-4 hover:bg-gray transition"
-        onClick={toggleAccordion}
-      >
-        <div className="w-[100px] h-[100px] text-center flex items-center justify-center bg-red text-white poppins text-[20px]">
-          {season_number}
-        </div>
-        <p className="mont text-white text-[18px]">Season {season_number}</p>
-        <p className="text-white mont text-[17px]">{s_air_date}</p>
-      </div>
-      <animated.div
-        style={{ height, opacity }}
-        className="overflow-hidden transition-all duration-300"
-      >
-        <Link
-          href={"/"}
-          className="flex items-center gap-[2rem] hover:opacity-[0.8]"
-        >
-          <Image
-            src={episode_image}
-            alt="episode-image"
-            width={100}
-            height={70}
-          />
-          <p className="text-white">
-            {season_number} - {episode_number}
-          </p>
-          <div>
-            <p className="text-white"> {name}</p>
-            <p className="text-white"> {e_air_date}</p>
-          </div>
-        </Link>
-      </animated.div>
-    </div>
-  );
-};
-
-function formatDate(date: any) {
-  if (date instanceof Date && !isNaN(date.getTime())) {
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  } else {
-    return "Invalid Date";
-  }
-}
+import AccordionSeason from "./AccordionSeason";
 
 const TvShowsDetails = () => {
   const [tvShowsDetails, setTvShowsDetails] = useState<MovieDetailsProps>();
@@ -96,105 +26,84 @@ const TvShowsDetails = () => {
   const [cast, setCast] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
   const [recommendedMovies, setRecommended] = useState([]);
-  const [reviews, setReviews] = useState([]);
-  const [more, setMore] = useState(false);
-  const [more1, setMore1] = useState(false);
-  const [more2, setMore2] = useState(false);
-  const [more3, setMore3] = useState(false);
-  const [more4, setMore4] = useState(false);
+
+  const [numberOfSeasons, setNumberOfSeasons] = useState(0);
+  const [allSeasonsData, setAllSeasonsData] = useState([]);
 
   const { id } = useParams();
+  console.log(id);
 
   useEffect(() => {
-    setLoading(true);
-    try {
-      TvShowsDetailsAPI(id).then((data) => {
-        setTvShowsDetails(data);
-        console.log("TvShowsDetails", data);
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    const fetchData = async () => {
+      setLoading(true);
 
-  useEffect(() => {
-    setLoading(true);
-    try {
-      TvShowsTrailerAPI(id).then((data) => {
-        setTrailer(data?.results);
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+      try {
+        const details = await TvShowsDetailsAPI(id);
+        setTvShowsDetails(details);
+        console.log("TvShowsDetails", details);
 
-  useEffect(() => {
-    setLoading(true);
-    try {
-      TvShowsCastAPI(id).then((data) => {
-        setCast(data?.cast);
-        console.log(data);
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+        const trailerData = await TvShowsTrailerAPI(id);
+        setTrailer(trailerData?.results);
 
-  useEffect(() => {
-    setLoading(true);
-    try {
-      TvShowsSimilarAPI(id).then((data) => {
-        setSimilarMovies(data.results);
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+        const castData = await TvShowsCastAPI(id);
+        setCast(castData?.cast);
+        console.log(castData);
 
-  useEffect(() => {
-    setLoading(true);
-    try {
-      RecommendedTvShowsAPI(id).then((data) => {
-        setRecommended(data?.results);
-        console.log(data?.results);
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+        const similarData = await TvShowsSimilarAPI(id);
+        setSimilarMovies(similarData.results);
 
-  useEffect(() => {
-    setLoading(true);
-    try {
-      TvShowsReviewsAPI(id).then((data) => {
-        setReviews(data?.results);
-        console.log(data?.results);
+        const recommendedData = await RecommendedTvShowsAPI(id);
+        setRecommended(recommendedData?.results);
+        console.log(recommendedData?.results);
+
+        const seriesDetails = await TvShowsDetailsAPI(id);
+        setNumberOfSeasons(seriesDetails?.number_of_seasons || 0);
+
+        const allSeasons: any = [];
+        for (
+          let seasonNumber = 1;
+          seasonNumber <= numberOfSeasons;
+          seasonNumber++
+        ) {
+          try {
+            const seasonData = await allSeasonAPI(id, seasonNumber);
+            allSeasons.push(seasonData);
+          } catch (error) {
+            console.error("Error fetching season data:", error);
+          } finally {
+          }
+        }
+        setAllSeasonsData(allSeasons);
+        console.log(allSeasons);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id, numberOfSeasons]);
+
+  function formatDate(date: any) {
+    if (date instanceof Date && !isNaN(date.getTime())) {
+      return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
       });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
+    } else {
+      return "Invalid Date";
     }
-  }, []);
+  }
+
+  if (loading) {
+    return <Loading />;
+  }
 
   const releaseDate = tvShowsDetails?.first_air_date
     ? new Date(tvShowsDetails?.first_air_date)
     : undefined;
-
-  console.log(id);
-  if (loading) {
-    return <Loading />;
-  }
   return (
     <section className="padding bg-black">
       <div className="flex flex-wrap gap-[1rem] md:flex-nowrap justify-center md:justify-start">
@@ -314,7 +223,22 @@ const TvShowsDetails = () => {
           </div>
         </div>
       )}
-
+      {allSeasonsData.length !== 0 && (
+        <h1 className="text-white poppins text-[20px] mt-[3rem] mb-[2rem] sm:text-[23px]">
+          Watch Tv Show
+        </h1>
+      )}
+      <div>
+        {allSeasonsData?.map((item: any) => (
+          <AccordionSeason
+            key={item?.id}
+            s_air_date={item?.air_date}
+            season_number={item?.season_number}
+            name={item?.name}
+            episodes={item?.episodes}
+          />
+        ))}
+      </div>
       {cast.length !== 0 && (
         <p className="text-white text-[20px] sm:text-[25px] poppins mt-[5rem]">
           Cast
@@ -359,7 +283,6 @@ const TvShowsDetails = () => {
       <Swiper
         spaceBetween={20}
         slidesPerView={5}
-        loop
         breakpoints={{
           230: {
             slidesPerView: 2,
@@ -429,7 +352,6 @@ const TvShowsDetails = () => {
       <Swiper
         spaceBetween={20}
         slidesPerView={5}
-        loop
         breakpoints={{
           230: {
             slidesPerView: 2,
@@ -490,285 +412,6 @@ const TvShowsDetails = () => {
           </>
         ))}
       </Swiper>
-
-      {reviews.length !== 0 && (
-        <p className="text-white poppins text-[20px] sm:text-[25px] mt-[5rem]">
-          Reviews
-        </p>
-      )}
-      <div className="flex slide__bar overflow-auto gap-[2rem] mt-[2rem] pb-[3rem]">
-        <div>
-          {reviews?.slice(0, 1)?.map((review: any) => (
-            <div className="flex flex-col reviews sm:w-[500px] w-[250px] p-3 rounded-[2rem]">
-              <div className="flex items-center gap-[1rem] flex-wrap">
-                <Image
-                  src={
-                    review?.author_details?.avatar_path
-                      ? `https://image.tmdb.org/t/p/w500${review?.author_details?.avatar_path}`
-                      : "/profile.webp"
-                  }
-                  alt="movie-poster"
-                  width={100}
-                  height={100}
-                  className="rounded-[1rem] mt-[0.5rem] mb-[1rem]"
-                />
-                <div>
-                  <p className="text-white text-[17px] mont">
-                    {review?.author}
-                  </p>
-                  <p className="text-white mont text-[17px]">
-                    ⭐{review?.author_details?.rating}
-                  </p>
-                </div>
-              </div>
-              {review?.content.length > 115 ? (
-                <div>
-                  <div
-                    style={more ? { height: "100%" } : { height: "50px" }}
-                    className="h-[50px] overflow-hidden"
-                  >
-                    <p className="text-white mont p-2 text-[16px]">
-                      {review?.content}
-                    </p>
-                  </div>
-                  <p
-                    className="gray-cast font-bold mont p-4 hover:text-red transition text-[17px] cursor-pointer"
-                    onClick={() => setMore(!more)}
-                  >
-                    {!more ? "Read More" : "Close"}
-                  </p>
-                </div>
-              ) : (
-                <div>
-                  <p className="text-white mont p-2 text-[16px]">
-                    {review?.content}
-                  </p>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-        <div>
-          {reviews.length >= 2 && (
-            <div className="flex flex-wrap gap-[2rem]">
-              {reviews?.slice(1, 2)?.map((review: any) => (
-                <div className="flex flex-col reviews sm:w-[500px] w-[250px] p-3 rounded-[2rem]">
-                  <div className="flex items-center gap-[1rem]">
-                    <Image
-                      src={
-                        review?.author_details?.avatar_path
-                          ? `https://image.tmdb.org/t/p/w500${review?.author_details?.avatar_path}`
-                          : "/profile.webp"
-                      }
-                      alt="movie-poster"
-                      width={100}
-                      height={100}
-                      className="rounded-[1rem] mt-[0.5rem] mb-[1rem]"
-                    />
-                    <div>
-                      <p className="text-white text-[17px] mont">
-                        {review?.author}
-                      </p>
-                      <p className="text-white mont text-[17px]">
-                        ⭐{review?.author_details?.rating}
-                      </p>
-                    </div>
-                  </div>
-                  {review?.content.length > 115 ? (
-                    <div>
-                      <div
-                        style={more1 ? { height: "100%" } : { height: "50px" }}
-                        className="h-[50px] overflow-hidden"
-                      >
-                        <p className="text-white mont p-2 text-[16px]">
-                          {review?.content}
-                        </p>
-                      </div>
-                      <p
-                        className="gray-cast font-bold mont p-4 hover:text-red transition text-[17px] cursor-pointer"
-                        onClick={() => setMore1(!more1)}
-                      >
-                        {!more1 ? "Read More" : "Close"}
-                      </p>
-                    </div>
-                  ) : (
-                    <div>
-                      <p className="text-white mont p-2 text-[16px]">
-                        {review?.content}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        <div>
-          {reviews.length >= 3 && (
-            <div className="flex flex-wrap gap-[2rem] ">
-              {reviews?.slice(2, 3)?.map((review: any) => (
-                <div className="flex flex-col reviews sm:w-[500px] w-[250px] p-3 rounded-[2rem]">
-                  <div className="flex items-center gap-[1rem]">
-                    <Image
-                      src={
-                        review?.author_details?.avatar_path
-                          ? `https://image.tmdb.org/t/p/w500${review?.author_details?.avatar_path}`
-                          : "/profile.webp"
-                      }
-                      alt="movie-poster"
-                      width={100}
-                      height={100}
-                      className="rounded-[1rem] mt-[0.5rem] mb-[1rem]"
-                    />
-                    <div>
-                      <p className="text-white text-[17px] mont">
-                        {review?.author}
-                      </p>
-                      <p className="text-white mont text-[17px]">
-                        ⭐{review?.author_details?.rating}
-                      </p>
-                    </div>
-                  </div>
-                  {review?.content.length > 115 ? (
-                    <div>
-                      <div
-                        style={more2 ? { height: "100%" } : { height: "50px" }}
-                        className="h-[50px] overflow-hidden"
-                      >
-                        <p className="text-white mont p-2 text-[16px]">
-                          {review?.content}
-                        </p>
-                      </div>
-                      <p
-                        className="gray-cast font-bold mont p-4 hover:text-red transition text-[17px] cursor-pointer"
-                        onClick={() => setMore2(!more2)}
-                      >
-                        {!more2 ? "Read More" : "Close"}
-                      </p>
-                    </div>
-                  ) : (
-                    <div>
-                      <p className="text-white mont p-2 text-[16px]">
-                        {review?.content}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        <div>
-          {reviews.length >= 4 && (
-            <div className="flex flex-wrap gap-[2rem] ">
-              {reviews?.slice(3, 4)?.map((review: any) => (
-                <div className="flex flex-col reviews sm:w-[500px] w-[250px] p-3 rounded-[2rem]">
-                  <div className="flex items-center gap-[1rem]">
-                    <Image
-                      src={
-                        review?.author_details?.avatar_path
-                          ? `https://image.tmdb.org/t/p/w500${review?.author_details?.avatar_path}`
-                          : "/profile.webp"
-                      }
-                      alt="movie-poster"
-                      width={100}
-                      height={100}
-                      className="rounded-[1rem] mt-[0.5rem] mb-[1rem]"
-                    />
-                    <div>
-                      <p className="text-white text-[17px] mont">
-                        {review?.author}
-                      </p>
-                      <p className="text-white mont text-[17px]">
-                        ⭐{review?.author_details?.rating}
-                      </p>
-                    </div>
-                  </div>
-                  {review?.content.length > 115 ? (
-                    <div>
-                      <div
-                        style={more3 ? { height: "100%" } : { height: "50px" }}
-                        className="h-[50px] overflow-hidden"
-                      >
-                        <p className="text-white mont p-2 text-[16px]">
-                          {review?.content}
-                        </p>
-                      </div>
-                      <p
-                        className="gray-cast font-bold mont p-4 hover:text-red transition text-[17px] cursor-pointer"
-                        onClick={() => setMore3(!more3)}
-                      >
-                        {!more3 ? "Read More" : "Close"}
-                      </p>
-                    </div>
-                  ) : (
-                    <div>
-                      <p className="text-white mont p-2 text-[16px]">
-                        {review?.content}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        <div>
-          {reviews.length >= 4 && (
-            <div className="flex flex-wrap gap-[2rem] ">
-              {reviews?.slice(4, 5)?.map((review: any) => (
-                <div className="flex flex-col reviews sm:w-[500px] w-[250px] p-3 rounded-[2rem]">
-                  <div className="flex items-center gap-[1rem]">
-                    <Image
-                      src={
-                        review?.author_details?.avatar_path
-                          ? `https://image.tmdb.org/t/p/w500${review?.author_details?.avatar_path}`
-                          : "/profile.webp"
-                      }
-                      alt="movie-poster"
-                      width={100}
-                      height={100}
-                      className="rounded-[1rem] mt-[0.5rem] mb-[1rem]"
-                    />
-                    <div>
-                      <p className="text-white text-[17px] mont">
-                        {review?.author}
-                      </p>
-                      <p className="text-white mont text-[17px]">
-                        ⭐{review?.author_details?.rating}
-                      </p>
-                    </div>
-                  </div>
-                  {review?.content.length > 115 ? (
-                    <div>
-                      <div
-                        style={more4 ? { height: "100%" } : { height: "50px" }}
-                        className="h-[50px] overflow-hidden"
-                      >
-                        <p className="text-white mont p-2 text-[16px]">
-                          {review?.content}
-                        </p>
-                      </div>
-                      <p
-                        className="gray-cast font-bold mont p-4 hover:text-red transition text-[17px] cursor-pointer"
-                        onClick={() => setMore4(!more4)}
-                      >
-                        {!more4 ? "Read More" : "Close"}
-                      </p>
-                    </div>
-                  ) : (
-                    <div>
-                      <p className="text-white mont p-2 text-[16px]">
-                        {review?.content}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
     </section>
   );
 };

@@ -212,10 +212,10 @@ export const TvShowsReviewsAPI = async (id: any) => {
   }
 };
 
-export const fetchAllSeasonsAPI = async (id: any, totalSeasons: any) => {
+export const allSeasonAPI = async (id: any, season_number: any) => {
   try {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/tv/${id}/season/${totalSeasons}`,
+      `https://api.themoviedb.org/3/tv/${id}/season/${season_number}`,
       options
     );
     return data;

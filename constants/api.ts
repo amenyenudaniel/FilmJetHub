@@ -113,3 +113,113 @@ export const allMoviesAPI = async (value: any) => {
     console.error(error);
   }
 };
+
+export const nowPlayingTvShows = async () => {
+  try {
+    const { data } = await axios.get(
+      "https://api.themoviedb.org/3/trending/tv/day",
+      options
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const allSeriesAPI = async (value: any) => {
+  try {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/trending/tv/day?page=${value}`,
+      options
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Tv Shows
+
+export const TvShowsDetailsAPI = async (id: any) => {
+  try {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/tv/${id}`,
+      options
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const TvShowsTrailerAPI = async (id: any) => {
+  try {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/tv/${id}/videos`,
+      options
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const TvShowsCastAPI = async (id: any) => {
+  try {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/tv/${id}/credits`,
+      options
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const TvShowsSimilarAPI = async (id: any) => {
+  try {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/tv/${id}/similar`,
+      options
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const RecommendedTvShowsAPI = async (id: any) => {
+  try {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/tv/${id}/recommendations`,
+      options
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const TvShowsReviewsAPI = async (id: any) => {
+  try {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/tv/${id}/reviews`,
+      options
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchAllSeasonsAPI = async (id: any, totalSeasons: any) => {
+  try {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/tv/${id}/season/${totalSeasons}`,
+      options
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};

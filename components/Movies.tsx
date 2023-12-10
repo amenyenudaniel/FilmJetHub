@@ -94,11 +94,32 @@ const Movies = () => {
         slidesPerView={5}
         autoplay={{ delay: 1800 }}
         loop
-        breakpoints={
-          {
-            // ... breakpoints configuration
-          }
-        }
+        breakpoints={{
+          230: {
+            slidesPerView: 2,
+            spaceBetween: 5,
+          },
+          480: {
+            slidesPerView: 3,
+            spaceBetween: 5,
+          },
+          640: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+          },
+          768: {
+            slidesPerView: 4,
+            spaceBetween: 10,
+          },
+          1000: {
+            slidesPerView: 5,
+            spaceBetween: 10,
+          },
+          1024: {
+            slidesPerView: 6,
+            spaceBetween: 20,
+          },
+        }}
         modules={[Pagination, Autoplay]}
       >
         {movies?.map((movie: MovieProps) => (
@@ -136,20 +157,22 @@ const Movies = () => {
         Popular Movies
       </h1>
 
-      <div className="flex flex-wrap gap-[1.5rem]">
+      <div className="flex flex-wrap gap-[1.5rem] sm:justify-start justify-center">
         {allMovies?.map((movie: MovieProps) => (
           <div
             key={movie?.id}
             className="h-full hover:scale-[1.1] transition container__"
           >
             <Link href={`/home/[id]`} as={`/home/${movie?.id}`}>
-              <Image
-                src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`}
-                alt="movie-poster"
-                width={200}
-                height={400}
-                className="image__container transition"
-              />
+              <div className="sm:w-[200px] sm:h-[full] w-[110px] h-auto">
+                <Image
+                  src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`}
+                  alt="movie-poster"
+                  width={200}
+                  height={400}
+                  className="image__container transition"
+                />
+              </div>
               {movie?.title.length > 13 ? (
                 <p className="text-white  md:text-[17px] text-[15px] mt-[0.5rem]">
                   {movie?.title.slice(0, 13)}..

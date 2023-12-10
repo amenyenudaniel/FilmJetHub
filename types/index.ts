@@ -28,6 +28,8 @@ export interface MovieProps {
   id: number;
   movie: any;
   page?: number;
+  name: any;
+  original_title?: any;
 }
 
 export interface MovieDetailsProps {
@@ -46,6 +48,10 @@ export interface MovieDetailsProps {
   production_companies: any;
   production_countries: any;
   tagline: string;
+  name?: string;
+  first_air_date?: string;
+  number_of_seasons?: number;
+  number_of_episodes?: number;
 }
 
 export interface MovieTrailerProps {

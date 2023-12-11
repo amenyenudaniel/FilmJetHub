@@ -197,7 +197,7 @@ const TvShowsDetails = () => {
         ))}
       </div>
 
-      {trailer && (
+      {trailer.length !== 0 && (
         <div className="mt-[4rem]">
           <h1 className="text-white poppins text-[20px] sm:text-[23px]">
             Watch Trailer

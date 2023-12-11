@@ -123,7 +123,7 @@ const EpisodePage = () => {
             {details?.name}
           </h1>
         </div>
-        <div className="flex items-center gap-[2rem]">
+        <div className="flex items-center flex-col sm:flex-row gap-[2rem]">
           <Image
             src={`https://image.tmdb.org/t/p/w500${episodeDetails?.still_path}`}
             alt="episode-image"
@@ -138,11 +138,11 @@ const EpisodePage = () => {
           </p>
         </div>
 
-        <p className="text-white mont mt-[0.5rem] text-[17px] w-[70%]">
+        <p className="text-white mont mt-[0.5rem] text-[17px] sm:w-[70%] w-[100%]">
           {episodeDetails?.overview}
         </p>
 
-        <div className="flex items-center gap-[2rem]">
+        <div className="flex items-center flex-wrap gap-[2rem]">
           <p className="text-white mt-[0.3rem] text-[19px] mont">
             ⭐{episodeDetails?.vote_average?.toFixed(1)}
           </p>

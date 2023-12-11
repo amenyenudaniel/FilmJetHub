@@ -33,13 +33,15 @@ const AccordionSeason = ({ episodes, s_air_date, season_number }: any) => {
         className="flex justify-between items-center cursor-pointer hover:bg-gray transition"
         onClick={toggleAccordion}
       >
-        <div className="flex items-center gap-[2rem] cursor-pointer p-4 ">
-          <div className="w-[60px] h-[60px] text-center flex items-center justify-center bg-red text-white poppins text-[20px]">
+        <div className="flex items-center sm:gap-[2rem] gap-[1rem] cursor-pointer p-4 ">
+          <div className="w-[60px] h-[60px] text-center flex items-center justify-center bg-red text-white poppins sm:text-[20px] text-[18px]">
             {season_number}
           </div>
-          <p className="mont text-white text-[18px]">Season {season_number}</p>
+          <p className="mont text-white sm:text-[18px] text-[16px]">
+            Season {season_number}
+          </p>
           {s_air_date && (
-            <p className="text-white mont text-[17px]">
+            <p className="text-white mont sm:text-[17px] text-[15px]">
               {formattedDate(s_air_date)}
             </p>
           )}
@@ -61,20 +63,23 @@ const AccordionSeason = ({ episodes, s_air_date, season_number }: any) => {
             key={episode?.still_path}
             href="/tvshows/[id]/[season_number]/[episode_number]"
             as={`/tvshows/${id}/${season_number}/${episode?.episode_number}`}
-            className="flex items-center gap-[2rem] hover:bg-gray transition border border-gray p-3"
+            className="flex items-center sm:gap-[2rem] gap-[1rem] hover:bg-gray transition border border-gray p-3 "
           >
             <Image
               src={`https://image.tmdb.org/t/p/w500${episode?.still_path}`}
               alt="episode-image"
-              width={100}
+              width={70}
               height={70}
             />
-            <p className="text-white hover:text-red">
+            <p className="text-white hover:text-red text-[14px]  sm:text-[17px]">
               {season_number} - {episode?.episode_number}
             </p>
             <div>
-              <p className="text-white mont text-[17px] "> {episode?.name}</p>
-              <p className=" mont text-red text-[15px] mt-[5px]">
+              <p className="text-white  mont sm:text-[17px] text-[15px] ">
+                {" "}
+                {episode?.name}
+              </p>
+              <p className=" mont text-red sm:text-[15px]  text-[14px] mt-[5px]">
                 {" "}
                 {formattedDate(episode?.air_date)}
               </p>

@@ -239,3 +239,27 @@ export const EpisodeDetailsAPI = async (
     console.error(error);
   }
 };
+
+export const SearchMovie = async (searchTerm: any) => {
+  try {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/search/movie?query=${searchTerm}`,
+      options
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const SearchTvShows = async (searchTerm: any) => {
+  try {
+    const { data } = await axios.get(
+      `https://api.themoviedb.org/3/search/tv?query=${searchTerm}`,
+      options
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};

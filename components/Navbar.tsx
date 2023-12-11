@@ -4,13 +4,21 @@ import { useContext, useState } from "react";
 import { AuthContext } from "@/context";
 import { AuthContextProps } from "@/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [userOpen, setUserOpen] = useState<boolean>(false);
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<any>("");
   const { auth, handleSignOut } = useContext(AuthContext) as AuthContextProps;
+  const router = useRouter();
 
+  const handleSubmit = (event: any) => {
+    event?.preventDefault();
+    console.log(searchTerm);
+    router.push(`/Search/${searchTerm}`);
+  };
   return (
     <section>
       <nav className="paddingNav gap-[1rem] bg-black py-2 flex items-center justify-between">
@@ -33,20 +41,29 @@ const Navbar = () => {
             Tv Shows
           </Link>
           <section>
-            <div className="w-[400px] flex relative items-center justify-center  md:flex hidden">
+            <form
+              onSubmit={handleSubmit}
+              className="w-[400px] flex relative items-center justify-center  md:flex hidden"
+            >
               <input
                 className="w-full h-[40px] pl-3 outline-none border border-red bg-transparent rounded-[10px] text-white text-[18px]"
                 type="text"
                 placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <Image
-                src={"/search.svg"}
-                width={30}
-                height={30}
-                alt="search-icon"
+              <button
+                type="submit"
                 className="cursor-pointer absolute right-[8px]"
-              />
-            </div>
+              >
+                <Image
+                  src={"/search.svg"}
+                  width={30}
+                  height={30}
+                  alt="search-icon"
+                />
+              </button>
+            </form>
           </section>
         </div>
         <Image
@@ -99,20 +116,29 @@ const Navbar = () => {
 
       {searchOpen && (
         <section className="sm:px-[6rem] px-[2rem] py-2 bg-gray absolute left-0 top-[50px] w-[100%] h-[60px] md:hidden block">
-          <div className="flex relative items-center justify-center">
+          <form
+            onSubmit={handleSubmit}
+            className="flex relative items-center justify-center"
+          >
             <input
               className="w-full h-[40px] pl-3 outline-none border border-red bg-transparent rounded-[10px] text-white text-[18px]"
               type="text"
               placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <Image
-              src={"/search.svg"}
-              width={30}
-              height={30}
-              alt="search-icon"
+            <button
+              type="submit"
               className="cursor-pointer absolute right-[8px]"
-            />
-          </div>
+            >
+              <Image
+                src={"/search.svg"}
+                width={30}
+                height={30}
+                alt="search-icon"
+              />
+            </button>
+          </form>
         </section>
       )}
 

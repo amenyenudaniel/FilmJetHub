@@ -6,7 +6,7 @@ const Reasons = () => {
     <section className="padding bg-black">
       {" "}
       <h1 className="text-white poppins font-bold sm:text-[30px] text-[20px] mb-[3rem]">
-        Why Sign In
+        Why Sign Up
       </h1>
       <div className="flex flex-wrap gap-[2rem] justify-center items-center">
         {ReasonsData.map((item) => (

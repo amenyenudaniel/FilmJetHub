@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBcs17ZTzcOCGg3rAFnxt7U8MOr-qTK9Ks",
-  authDomain: "film-project-a5721.firebaseapp.com",
-  projectId: "film-project-a5721",
-  storageBucket: "film-project-a5721.appspot.com",
-  messagingSenderId: "488543921742",
-  appId: "1:488543921742:web:718cbc3cb02637f24dc51f",
-  measurementId: "G-T64H0HWRVQ",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_SENDER,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);

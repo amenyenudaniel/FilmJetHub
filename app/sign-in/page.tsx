@@ -49,13 +49,6 @@ const SignIn = () => {
         >
           Sign In
         </button>
-        <button
-          type="button"
-          onClick={googleSignUp}
-          className="outline-none mont border-none py-2 sm:px-4  mt-[2rem]  px-3 text-white bg-red mt-[2rem] sm:text-[22px] text-[18px] font-bold rounded-[5px] hover:bg-white hover:text-black  transition"
-        >
-          Sign In With Google
-        </button>
 
         <p className="text-white mont mt-[1rem] sm:text-[20px] text-[17px]">
           Don't have account?{" "}

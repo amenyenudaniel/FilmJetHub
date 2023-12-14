@@ -9,7 +9,6 @@ import {
   MovieTrailerAPI,
   RecommendedMovieAPI,
 } from "@/constants/api";
-import Image from "next/image";
 import { MovieDetailsProps, MovieProps, MovieTrailerProps } from "@/types";
 import Loading from "./Loading";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -146,7 +145,7 @@ const MovieDetails = () => {
   return (
     <section className="padding bg-black">
       <div className="flex flex-wrap gap-[1rem] md:flex-nowrap justify-center md:justify-start">
-        <Image
+        <img
           src={`https://image.tmdb.org/t/p/w500${movieDetails?.poster_path}`}
           width={300}
           height={10}
@@ -279,14 +278,14 @@ const MovieDetails = () => {
         {cast?.slice(0, 20).map((person: any) => (
           <div key={person?.cast_id} className="flex items-center gap-[1rem]">
             {person?.profile_path ? (
-              <Image
+              <img
                 src={`https://image.tmdb.org/t/p/w500${person?.profile_path}`}
                 alt="cast--image"
                 width={50}
                 height={50}
               />
             ) : (
-              <Image
+              <img
                 src={"/profile.webp"}
                 alt="cast--image"
                 width={50}
@@ -349,7 +348,7 @@ const MovieDetails = () => {
                 className="w-[100%] h-full hover:scale-[1.1] transition container__"
               >
                 <Link href={`/home/[id]`} as={`/home/${movie?.id}`}>
-                  <Image
+                  <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                     alt="movie-poster"
                     width={200}
@@ -419,7 +418,7 @@ const MovieDetails = () => {
                 className="w-[100%] h-full hover:scale-[1.1] transition container__"
               >
                 <Link href={`/home/[id]`} as={`/home/${movie?.id}`}>
-                  <Image
+                  <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                     alt="movie-poster"
                     width={200}
@@ -444,285 +443,6 @@ const MovieDetails = () => {
           </>
         ))}
       </Swiper>
-
-      {reviews.length !== 0 && (
-        <p className="text-white poppins text-[20px] sm:text-[25px] mt-[5rem]">
-          Reviews
-        </p>
-      )}
-      <div className="flex slide__bar overflow-auto gap-[2rem] mt-[2rem] pb-[3rem]">
-        <div>
-          {reviews?.slice(0, 1)?.map((review: any) => (
-            <div className="flex flex-col reviews sm:w-[500px] w-[250px] p-3 rounded-[2rem]">
-              <div className="flex items-center gap-[1rem] flex-wrap">
-                <Image
-                  src={
-                    review?.author_details?.avatar_path
-                      ? `https://image.tmdb.org/t/p/w500${review?.author_details?.avatar_path}`
-                      : "/profile.webp"
-                  }
-                  alt="movie-poster"
-                  width={100}
-                  height={100}
-                  className="rounded-[1rem] mt-[0.5rem] mb-[1rem]"
-                />
-                <div>
-                  <p className="text-white text-[17px] mont">
-                    {review?.author}
-                  </p>
-                  <p className="text-white mont text-[17px]">
-                    ⭐{review?.author_details?.rating}
-                  </p>
-                </div>
-              </div>
-              {review?.content.length > 115 ? (
-                <div>
-                  <div
-                    style={more ? { height: "100%" } : { height: "50px" }}
-                    className="h-[50px] overflow-hidden"
-                  >
-                    <p className="text-white mont p-2 text-[16px]">
-                      {review?.content}
-                    </p>
-                  </div>
-                  <p
-                    className="gray-cast font-bold mont p-4 hover:text-red transition text-[17px] cursor-pointer"
-                    onClick={() => setMore(!more)}
-                  >
-                    {!more ? "Read More" : "Close"}
-                  </p>
-                </div>
-              ) : (
-                <div>
-                  <p className="text-white mont p-2 text-[16px]">
-                    {review?.content}
-                  </p>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-        <div>
-          {reviews.length >= 2 && (
-            <div className="flex flex-wrap gap-[2rem]">
-              {reviews?.slice(1, 2)?.map((review: any) => (
-                <div className="flex flex-col reviews sm:w-[500px] w-[250px] p-3 rounded-[2rem]">
-                  <div className="flex items-center gap-[1rem]">
-                    <Image
-                      src={
-                        review?.author_details?.avatar_path
-                          ? `https://image.tmdb.org/t/p/w500${review?.author_details?.avatar_path}`
-                          : "/profile.webp"
-                      }
-                      alt="movie-poster"
-                      width={100}
-                      height={100}
-                      className="rounded-[1rem] mt-[0.5rem] mb-[1rem]"
-                    />
-                    <div>
-                      <p className="text-white text-[17px] mont">
-                        {review?.author}
-                      </p>
-                      <p className="text-white mont text-[17px]">
-                        ⭐{review?.author_details?.rating}
-                      </p>
-                    </div>
-                  </div>
-                  {review?.content.length > 115 ? (
-                    <div>
-                      <div
-                        style={more1 ? { height: "100%" } : { height: "50px" }}
-                        className="h-[50px] overflow-hidden"
-                      >
-                        <p className="text-white mont p-2 text-[16px]">
-                          {review?.content}
-                        </p>
-                      </div>
-                      <p
-                        className="gray-cast font-bold mont p-4 hover:text-red transition text-[17px] cursor-pointer"
-                        onClick={() => setMore1(!more1)}
-                      >
-                        {!more1 ? "Read More" : "Close"}
-                      </p>
-                    </div>
-                  ) : (
-                    <div>
-                      <p className="text-white mont p-2 text-[16px]">
-                        {review?.content}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        <div>
-          {reviews.length >= 3 && (
-            <div className="flex flex-wrap gap-[2rem] ">
-              {reviews?.slice(2, 3)?.map((review: any) => (
-                <div className="flex flex-col reviews sm:w-[500px] w-[250px] p-3 rounded-[2rem]">
-                  <div className="flex items-center gap-[1rem]">
-                    <Image
-                      src={
-                        review?.author_details?.avatar_path
-                          ? `https://image.tmdb.org/t/p/w500${review?.author_details?.avatar_path}`
-                          : "/profile.webp"
-                      }
-                      alt="movie-poster"
-                      width={100}
-                      height={100}
-                      className="rounded-[1rem] mt-[0.5rem] mb-[1rem]"
-                    />
-                    <div>
-                      <p className="text-white text-[17px] mont">
-                        {review?.author}
-                      </p>
-                      <p className="text-white mont text-[17px]">
-                        ⭐{review?.author_details?.rating}
-                      </p>
-                    </div>
-                  </div>
-                  {review?.content.length > 115 ? (
-                    <div>
-                      <div
-                        style={more2 ? { height: "100%" } : { height: "50px" }}
-                        className="h-[50px] overflow-hidden"
-                      >
-                        <p className="text-white mont p-2 text-[16px]">
-                          {review?.content}
-                        </p>
-                      </div>
-                      <p
-                        className="gray-cast font-bold mont p-4 hover:text-red transition text-[17px] cursor-pointer"
-                        onClick={() => setMore2(!more2)}
-                      >
-                        {!more2 ? "Read More" : "Close"}
-                      </p>
-                    </div>
-                  ) : (
-                    <div>
-                      <p className="text-white mont p-2 text-[16px]">
-                        {review?.content}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        <div>
-          {reviews.length >= 4 && (
-            <div className="flex flex-wrap gap-[2rem] ">
-              {reviews?.slice(3, 4)?.map((review: any) => (
-                <div className="flex flex-col reviews sm:w-[500px] w-[250px] p-3 rounded-[2rem]">
-                  <div className="flex items-center gap-[1rem]">
-                    <Image
-                      src={
-                        review?.author_details?.avatar_path
-                          ? `https://image.tmdb.org/t/p/w500${review?.author_details?.avatar_path}`
-                          : "/profile.webp"
-                      }
-                      alt="movie-poster"
-                      width={100}
-                      height={100}
-                      className="rounded-[1rem] mt-[0.5rem] mb-[1rem]"
-                    />
-                    <div>
-                      <p className="text-white text-[17px] mont">
-                        {review?.author}
-                      </p>
-                      <p className="text-white mont text-[17px]">
-                        ⭐{review?.author_details?.rating}
-                      </p>
-                    </div>
-                  </div>
-                  {review?.content.length > 115 ? (
-                    <div>
-                      <div
-                        style={more3 ? { height: "100%" } : { height: "50px" }}
-                        className="h-[50px] overflow-hidden"
-                      >
-                        <p className="text-white mont p-2 text-[16px]">
-                          {review?.content}
-                        </p>
-                      </div>
-                      <p
-                        className="gray-cast font-bold mont p-4 hover:text-red transition text-[17px] cursor-pointer"
-                        onClick={() => setMore3(!more3)}
-                      >
-                        {!more3 ? "Read More" : "Close"}
-                      </p>
-                    </div>
-                  ) : (
-                    <div>
-                      <p className="text-white mont p-2 text-[16px]">
-                        {review?.content}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        <div>
-          {reviews.length >= 4 && (
-            <div className="flex flex-wrap gap-[2rem] ">
-              {reviews?.slice(4, 5)?.map((review: any) => (
-                <div className="flex flex-col reviews sm:w-[500px] w-[250px] p-3 rounded-[2rem]">
-                  <div className="flex items-center gap-[1rem]">
-                    <Image
-                      src={
-                        review?.author_details?.avatar_path
-                          ? `https://image.tmdb.org/t/p/w500${review?.author_details?.avatar_path}`
-                          : "/profile.webp"
-                      }
-                      alt="movie-poster"
-                      width={100}
-                      height={100}
-                      className="rounded-[1rem] mt-[0.5rem] mb-[1rem]"
-                    />
-                    <div>
-                      <p className="text-white text-[17px] mont">
-                        {review?.author}
-                      </p>
-                      <p className="text-white mont text-[17px]">
-                        ⭐{review?.author_details?.rating}
-                      </p>
-                    </div>
-                  </div>
-                  {review?.content.length > 115 ? (
-                    <div>
-                      <div
-                        style={more4 ? { height: "100%" } : { height: "50px" }}
-                        className="h-[50px] overflow-hidden"
-                      >
-                        <p className="text-white mont p-2 text-[16px]">
-                          {review?.content}
-                        </p>
-                      </div>
-                      <p
-                        className="gray-cast font-bold mont p-4 hover:text-red transition text-[17px] cursor-pointer"
-                        onClick={() => setMore4(!more4)}
-                      >
-                        {!more4 ? "Read More" : "Close"}
-                      </p>
-                    </div>
-                  ) : (
-                    <div>
-                      <p className="text-white mont p-2 text-[16px]">
-                        {review?.content}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
     </section>
   );
 };

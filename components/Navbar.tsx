@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useContext, useState } from "react";
 import { AuthContext } from "@/context";
 import { AuthContextProps } from "@/types";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {
@@ -56,7 +55,7 @@ const Navbar = () => {
                 type="submit"
                 className="cursor-pointer absolute right-[8px]"
               >
-                <Image
+                <img
                   src={"/search.svg"}
                   width={30}
                   height={30}
@@ -66,7 +65,7 @@ const Navbar = () => {
             </form>
           </section>
         </div>
-        <Image
+        <img
           src={"/search.svg"}
           width={30}
           height={30}
@@ -74,7 +73,7 @@ const Navbar = () => {
           className="cursor-pointer md:hidden flex"
           onClick={() => setSearchOpen(!searchOpen)}
         />
-        <Image
+        <img
           src={"/menu.svg"}
           width={30}
           height={30}
@@ -84,7 +83,7 @@ const Navbar = () => {
         />
         <div className="lg:flex hidden">
           {auth?.currentUser?.photoURL ? (
-            <Image
+            <img
               src={auth?.currentUser?.photoURL}
               width={35}
               height={35}
@@ -93,7 +92,7 @@ const Navbar = () => {
               onClick={() => setUserOpen(!userOpen)}
             />
           ) : (
-            <Image
+            <img
               src={"/profile.svg"}
               width={35}
               height={35}
@@ -131,7 +130,7 @@ const Navbar = () => {
               type="submit"
               className="cursor-pointer absolute right-[8px]"
             >
-              <Image
+              <img
                 src={"/search.svg"}
                 width={30}
                 height={30}

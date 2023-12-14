@@ -11,7 +11,6 @@ import {
 } from "@/constants/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Image from "next/image";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -124,7 +123,7 @@ const EpisodePage = () => {
           </h1>
         </div>
         <div className="flex items-center flex-col sm:flex-row gap-[2rem]">
-          <Image
+          <img
             src={`https://image.tmdb.org/t/p/w500${episodeDetails?.still_path}`}
             alt="episode-image"
             width={150}
@@ -226,7 +225,7 @@ const EpisodePage = () => {
                   className="w-[100%] h-full hover:scale-[1.1] transition container__"
                 >
                   <Link href={`/tvshows/[id]`} as={`/tvshows/${movie?.id}`}>
-                    <Image
+                    <img
                       src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                       alt="movie-poster"
                       width={200}
@@ -295,7 +294,7 @@ const EpisodePage = () => {
                   className="w-[100%] h-full hover:scale-[1.1] transition container__"
                 >
                   <Link href={`/tvshows/[id]`} as={`/tvshows/${movie?.id}`}>
-                    <Image
+                    <img
                       src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                       alt="movie-poster"
                       width={200}

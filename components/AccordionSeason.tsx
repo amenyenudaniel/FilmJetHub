@@ -1,7 +1,6 @@
 "use client";
 import { useSpring, animated } from "react-spring";
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
@@ -48,9 +47,9 @@ const AccordionSeason = ({ episodes, s_air_date, season_number }: any) => {
         </div>
         <div className="pr-[2rem]">
           {isOpen ? (
-            <Image src={"/arrow-top.svg"} width={30} height={30} alt="arrow" />
+            <img src={"/arrow-top.svg"} width={30} height={30} alt="arrow" />
           ) : (
-            <Image src={"/arrow-down.svg"} width={20} height={20} alt="arrow" />
+            <img src={"/arrow-down.svg"} width={20} height={20} alt="arrow" />
           )}
         </div>
       </div>
@@ -65,7 +64,7 @@ const AccordionSeason = ({ episodes, s_air_date, season_number }: any) => {
             as={`/tvshows/${id}/${season_number}/${episode?.episode_number}`}
             className="flex items-center sm:gap-[2rem] gap-[1rem] hover:bg-gray transition border border-gray p-3 "
           >
-            <Image
+            <img
               src={`https://image.tmdb.org/t/p/w500${episode?.still_path}`}
               alt="episode-image"
               width={70}

@@ -9,7 +9,6 @@ import {
   RecommendedTvShowsAPI,
   allSeasonAPI,
 } from "@/constants/api";
-import Image from "next/image";
 import { MovieDetailsProps, MovieProps, MovieTrailerProps } from "@/types";
 import Loading from "./Loading";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -107,7 +106,7 @@ const TvShowsDetails = () => {
   return (
     <section className="padding bg-black">
       <div className="flex flex-wrap gap-[1rem] md:flex-nowrap justify-center md:justify-start">
-        <Image
+        <img
           src={`https://image.tmdb.org/t/p/w500${tvShowsDetails?.poster_path}`}
           width={300}
           height={10}
@@ -249,14 +248,14 @@ const TvShowsDetails = () => {
         {cast?.slice(0, 20).map((person: any) => (
           <div key={person?.cast_id} className="flex items-center gap-[1rem]">
             {person?.profile_path ? (
-              <Image
+              <img
                 src={`https://image.tmdb.org/t/p/w500${person?.profile_path}`}
                 alt="cast--image"
                 width={50}
                 height={50}
               />
             ) : (
-              <Image
+              <img
                 src={"/profile.webp"}
                 alt="cast--image"
                 width={50}
@@ -318,7 +317,7 @@ const TvShowsDetails = () => {
                 className="w-[100%] h-full hover:scale-[1.1] transition container__"
               >
                 <Link href={`/tvshows/[id]`} as={`/tvshows/${movie?.id}`}>
-                  <Image
+                  <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                     alt="movie-poster"
                     width={200}
@@ -387,7 +386,7 @@ const TvShowsDetails = () => {
                 className="w-[100%] h-full hover:scale-[1.1] transition container__"
               >
                 <Link href={`/tvshows/[id]`} as={`/tvshows/${movie?.id}`}>
-                  <Image
+                  <img
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                     alt="movie-poster"
                     width={200}

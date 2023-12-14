@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar";
 import { SearchMovie, SearchTvShows } from "@/constants/api";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { MovieProps } from "@/types";
 import Loading from "@/components/Loading";
@@ -69,7 +68,7 @@ const SearchPage = () => {
             >
               <Link href={`/home/[id]`} as={`/home/${movie?.id}`}>
                 <div className="sm:w-[200px] sm:h-[full] w-[110px] h-auto">
-                  <Image
+                  <img
                     src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`}
                     alt="movie-poster"
                     width={200}
@@ -109,7 +108,7 @@ const SearchPage = () => {
             >
               <Link href={`/tvshows/[id]`} as={`/tvshows/${tvShow?.id}`}>
                 <div className="sm:w-[200px] sm:h-[full] w-[110px] h-auto">
-                  <Image
+                  <img
                     src={`https://image.tmdb.org/t/p/w500${tvShow?.poster_path}`}
                     alt="movie-poster"
                     width={200}

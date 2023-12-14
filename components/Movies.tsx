@@ -6,7 +6,6 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import Image from "next/image";
 import Link from "next/link";
 import { MovieProps } from "@/types";
 import { allMoviesAPI, nowPlayingMovies } from "@/constants/api";
@@ -128,7 +127,7 @@ const Movies = () => {
             className="w-[100%] h-full hover:scale-[1.1] transition container__"
           >
             <Link href={`/home/[id]`} as={`/home/${movie?.id}`}>
-              <Image
+              <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt="movie-poster"
                 width={200}
@@ -165,7 +164,7 @@ const Movies = () => {
           >
             <Link href={`/home/[id]`} as={`/home/${movie?.id}`}>
               <div className="sm:w-[200px] sm:h-[full] w-[110px] h-auto">
-                <Image
+                <img
                   src={`https://image.tmdb.org/t/p/w500${movie?.poster_path}`}
                   alt="movie-poster"
                   width={200}

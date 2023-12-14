@@ -6,7 +6,6 @@ import "swiper/css/navigation";
 import { Autoplay } from "swiper/modules";
 import { useEffect, useState } from "react";
 import { trendingMoviesProps } from "@/types";
-import Image from "next/image";
 import { TrendingMovies } from "@/constants/api";
 import Link from "next/link";
 import Loading from "./Loading";

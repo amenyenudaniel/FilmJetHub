@@ -72,7 +72,7 @@ const Trending = () => {
       >
         {trendingMovies?.map((movie: trendingMoviesProps) => (
           <SwiperSlide key={movie?.id} className="w-[100%] h-[100%]">
-            <Image
+            <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt="movie-poster"
               width={200}

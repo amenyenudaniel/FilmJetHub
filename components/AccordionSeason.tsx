@@ -27,35 +27,43 @@ const AccordionSeason = ({ episodes, s_air_date, season_number }: any) => {
     return date.toLocaleDateString(undefined, options);
   };
   return (
-    <div className="border-b border-black gray w-[100%]">
+    <div className="border-b border-black gray w-[100%] ">
       <div
         className="flex justify-between items-center cursor-pointer hover:bg-gray transition"
         onClick={toggleAccordion}
       >
         <div className="flex items-center sm:gap-[2rem] gap-[1rem] cursor-pointer p-4 ">
-          <div className="w-[60px] h-[60px] text-center flex items-center justify-center bg-red text-white poppins sm:text-[20px] text-[18px]">
+          <div className="sm:w-[70px] w-[50px] h-[50px] sm:h-[70px] text-center flex items-center justify-center bg-red text-white poppins sm:text-[20px] text-[18px]">
             {season_number}
           </div>
           <p className="mont text-white sm:text-[18px] text-[16px]">
             Season {season_number}
           </p>
           {s_air_date && (
-            <p className="text-white mont sm:text-[17px] text-[15px]">
+            <p className="text-white mont sm:text-[17px] hidden sm:block text-[15px]">
               {formattedDate(s_air_date)}
             </p>
           )}
         </div>
         <div className="pr-[2rem]">
           {isOpen ? (
-            <img src={"/arrow-top.svg"} width={30} height={30} alt="arrow" />
+            <img
+              src={"/arrow-top.svg"}
+              className="sm:w-[30px] w-[25px] h-[25px] sm:h-[30px]"
+              alt="arrow"
+            />
           ) : (
-            <img src={"/arrow-down.svg"} width={20} height={20} alt="arrow" />
+            <img
+              src={"/arrow-down.svg"}
+              className="sm:w-[20px] sm:h-[20px] w-[15px] h-[15px]"
+              alt="arrow"
+            />
           )}
         </div>
       </div>
       <animated.div
         style={{ height, opacity }}
-        className="overflow-hidden transition-all duration-300"
+        className="overflow-hidden transition-all duration-300 slide-bottom"
       >
         {episodes?.map((episode: any) => (
           <Link

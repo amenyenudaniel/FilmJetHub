@@ -107,14 +107,14 @@ const Navbar = () => {
       {userOpen && (
         <button
           onClick={handleSignOut}
-          className="outline-none border-none py-2 sm:px-4  px-3 text-white  mont bg-red mt-[2rem] sm:text-[22px] text-[18px] font-bold rounded-[5px] hover:bg-white hover:text-black transition absolute right-[20px] top-[30px]"
+          className="outline-none border-none py-2 sm:px-4  px-3 text-white  mont bg-red mt-[2rem] sm:text-[22px] text-[18px] font-bold rounded-[5px] hover:bg-white hover:text-black transition absolute right-[20px] top-[30px] slide-bottom"
         >
           Sign Out
         </button>
       )}
 
       {searchOpen && (
-        <section className="sm:px-[6rem] px-[2rem] py-2 bg-gray absolute left-0 top-[50px] w-[100%] h-[60px] md:hidden block">
+        <section className="sm:px-[6rem] px-[2rem] py-2 bg-gray absolute left-0 top-[50px] w-[100%] h-[60px] md:hidden block slide-bottom">
           <form
             onSubmit={handleSubmit}
             className="flex relative items-center justify-center"
@@ -142,7 +142,7 @@ const Navbar = () => {
       )}
 
       {toggleMenu && (
-        <div className="bg-gray rounded-[10px] w-[40%] h-[100px] absolute right-[10px]  flex-col items-center justify-center gap-[1rem] sm:hidden flex">
+        <div className="bg-gray rounded-[10px] w-[40%] h-[100px] absolute right-[10px]  flex-col items-center justify-center gap-[1rem] sm:hidden flex slide-bottom">
           <Link
             onClick={() => setToggleMenu(false)}
             href={"/home"}

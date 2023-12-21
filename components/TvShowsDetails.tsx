@@ -8,6 +8,7 @@ import {
   TvShowsTrailerAPI,
   RecommendedTvShowsAPI,
   allSeasonAPI,
+  TvShowsReviewsAPI,
 } from "@/constants/api";
 import { MovieDetailsProps, MovieProps, MovieTrailerProps } from "@/types";
 import Loading from "./Loading";
@@ -17,6 +18,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Link from "next/link";
 import AccordionSeason from "./AccordionSeason";
+import AccordionReviews from "./AccordionReviews";
 
 const TvShowsDetails = () => {
   const [tvShowsDetails, setTvShowsDetails] = useState<MovieDetailsProps>();
@@ -25,6 +27,7 @@ const TvShowsDetails = () => {
   const [cast, setCast] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
   const [recommendedMovies, setRecommended] = useState([]);
+  const [reviews, setReviews] = useState([]);
 
   const [numberOfSeasons, setNumberOfSeasons] = useState(0);
   const [allSeasonsData, setAllSeasonsData] = useState([]);
@@ -47,6 +50,11 @@ const TvShowsDetails = () => {
         const castData = await TvShowsCastAPI(id);
         setCast(castData?.cast);
         console.log(castData);
+
+        TvShowsReviewsAPI(id).then((data) => {
+          setReviews(data?.results);
+          console.log(data?.results);
+        });
 
         const similarData = await TvShowsSimilarAPI(id);
         setSimilarMovies(similarData.results);
@@ -272,6 +280,24 @@ const TvShowsDetails = () => {
               </p>
             </div>
           </div>
+        ))}
+      </div>
+
+      {reviews.length !== 0 && (
+        <p className="text-white text-[20px] sm:text-[25px] poppins mb-[1rem] mt-[5rem]">
+          Reviews
+        </p>
+      )}
+
+      <div>
+        {reviews?.slice(0, 6).map((review: any) => (
+          <AccordionReviews
+            key={review.author}
+            author={review?.author}
+            rating={review?.author_details?.rating}
+            content={review?.content}
+            avatar_path={review?.author_details?.avatar_path}
+          />
         ))}
       </div>
       {similarMovies.length !== 0 && (

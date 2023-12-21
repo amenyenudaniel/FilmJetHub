@@ -16,6 +16,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Link from "next/link";
+import { slice } from "@splidejs/splide/src/js/utils";
+import AccordionReviews from "./AccordionReviews";
 
 function formatDate(date: any) {
   if (date instanceof Date && !isNaN(date.getTime())) {
@@ -46,11 +48,6 @@ const MovieDetails = () => {
   const [similarMovies, setSimilarMovies] = useState([]);
   const [recommendedMovies, setRecommended] = useState([]);
   const [reviews, setReviews] = useState([]);
-  const [more, setMore] = useState(false);
-  const [more1, setMore1] = useState(false);
-  const [more2, setMore2] = useState(false);
-  const [more3, setMore3] = useState(false);
-  const [more4, setMore4] = useState(false);
 
   const { id } = useParams();
 
@@ -304,6 +301,25 @@ const MovieDetails = () => {
           </div>
         ))}
       </div>
+
+      {reviews.length !== 0 && (
+        <p className="text-white text-[20px] sm:text-[25px] poppins mb-[1rem] mt-[5rem]">
+          Reviews
+        </p>
+      )}
+
+      <div>
+        {reviews?.slice(0, 6).map((review: any) => (
+          <AccordionReviews
+            key={review.author}
+            author={review?.author}
+            rating={review?.author_details?.rating}
+            content={review?.content}
+            avatar_path={review?.author_details?.avatar_path}
+          />
+        ))}
+      </div>
+
       {similarMovies.length !== 0 && (
         <p className="text-white text-[20px] sm:text-[25px] poppins mb-[1rem] mt-[5rem]">
           Similar Movies

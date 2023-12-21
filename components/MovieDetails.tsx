@@ -16,7 +16,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Link from "next/link";
-import { slice } from "@splidejs/splide/src/js/utils";
+
 import AccordionReviews from "./AccordionReviews";
 
 function formatDate(date: any) {

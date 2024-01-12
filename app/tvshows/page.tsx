@@ -161,14 +161,14 @@ const TvShows = () => {
           Popular Tv Shows
         </h1>
 
-        <div className="flex flex-wrap gap-[1.5rem] sm:justify-start justify-center">
+        <div className="flex flex-wrap sm:gap-[1rem] gap-[0.5rem] sm:justify-start justify-center">
           {allTvShows?.map((tvShow: MovieProps) => (
             <div
               key={tvShow?.id}
               className="h-full hover:scale-[1.1] transition container__"
             >
               <Link href={`/tvshows/[id]`} as={`/tvshows/${tvShow?.id}`}>
-                <div className="sm:w-[200px] sm:h-[full] w-[110px] h-auto">
+                <div className="sm:w-[200px] sm:h-[full] w-[130px] h-auto">
                   <img
                     src={`https://image.tmdb.org/t/p/w500${tvShow?.poster_path}`}
                     alt="movie-poster"
@@ -180,7 +180,7 @@ const TvShows = () => {
 
                 {tvShow?.name.length > 13 ? (
                   <p className="text-white  md:text-[17px] text-[15px] mt-[0.5rem]">
-                    {tvShow?.name.slice(0, 13)}..
+                    {tvShow?.name.slice(0, 12)}..
                   </p>
                 ) : (
                   <p className="text-white md:text-[17px] text-[15px] mt-[0.5rem]">

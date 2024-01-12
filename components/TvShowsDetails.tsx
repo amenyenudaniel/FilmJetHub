@@ -136,7 +136,7 @@ const TvShowsDetails = () => {
               </p>
             )}
 
-            <div className="flex gap-[1rem] items-center ">
+            <div className="flex gap-[1rem] items-center flex-wrap">
               {tvShowsDetails?.production_countries?.map((country: any) => (
                 <p
                   key={country?.name}

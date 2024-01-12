@@ -26,10 +26,20 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     setLoading(true);
+
+    // Check if the user has already been redirected
+    const alreadyRedirected = sessionStorage.getItem("alreadyRedirected");
+
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
       if (authUser) {
         setUser(authUser);
-        router.push("/home");
+
+        // Check if the user has already been redirected
+        if (!alreadyRedirected) {
+          sessionStorage.setItem("alreadyRedirected", "true");
+          router.push("/home");
+        }
+
         setLoading(false);
       } else {
         setUser(undefined);
@@ -39,7 +49,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
     });
 
     return () => unsubscribe();
-  }, [auth, router]);
+  }, []);
 
   const handleLogIn = async () => {
     setLoadingUser(true);

@@ -165,7 +165,7 @@ const MovieDetails = () => {
             <p className="text-[15px] text-white mont">
               {formatRuntime(movieDetails?.runtime || 0)}
             </p>
-            <div className="flex gap-[1rem] items-center ">
+            <div className="flex gap-[1rem] items-center flex-wrap">
               {movieDetails?.production_countries?.map((country: any) => (
                 <p
                   key={country?.name}

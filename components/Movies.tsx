@@ -31,7 +31,9 @@ const Movies = () => {
   };
 
   // Function to handle "Load More" button click
-  const handleClick = async () => {
+  const handleClick = async (event: any) => {
+    event.preventDefault();
+
     const nextPage = pages + 4;
 
     const dataForPage = await fetchData(nextPage);
